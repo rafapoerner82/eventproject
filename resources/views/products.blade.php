@@ -1,7 +1,9 @@
 @extends('layouts.main')
 
-@section('title', '| RAFA events')
+@section('title', '| Produtos')
+
 @section('content')
 
+<h1>Tela de Produtos</h1>
 
 @endsection
