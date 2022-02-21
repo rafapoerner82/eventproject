@@ -9,9 +9,17 @@ class EventController extends Controller
 {
     public function index()
     {
+        $search = request('search');
 
-        $events = Event::all(); // -> Esse método(all) pega todos os registros da tabela events.
-        return view('welcome', ['events' => $events]);
+        if ($search) {
+            $events = Event::where([
+                ['title', 'like', '%' . $search . '%']
+            ])->get();
+        } else {
+            $events = Event::all(); // -> Esse método(all) pega todos os registros da tabela events.
+        }
+
+        return view('welcome', ['events' => $events, 'search' => $search]);
     }
 
     public function create()
@@ -24,9 +32,11 @@ class EventController extends Controller
         $event = new Event();
 
         $event->title = $request->title;
+        $event->date = $request->date;
         $event->city = $request->city;
         $event->private = $request->private;
         $event->description = $request->description;
+        $event->items = $request->items;
 
         //Image Upload
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -37,6 +47,9 @@ class EventController extends Controller
             $requestImage->move(public_path('img/events'), $imageName); // Move o arquivo para a pasta img/events.
             $event->image = $imageName; // Salva o nome da imagem no banco de dados.
         }
+
+        $user = auth()->user();
+        $event->user_id = $user->id;
 
         $event->save();
 
