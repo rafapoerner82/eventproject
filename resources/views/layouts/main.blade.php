@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="collapse navbar-collapse" id="navbar">
                 <a href="/" class="navbar brand">
-                    <img src="/img/eventos1.png" alt="RAFA events">
+                    <img src="/img/icon-events.svg" alt="RAFA events">
                 </a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
