@@ -43,9 +43,20 @@
             </div>
         </nav>
     </header>
-    @yield('content')
+    <main>
+        <div class="conatiner-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    @if(session('msg'))
+                    <p class="msg">{{ session('msg') }}</p>
+                    @endif
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </main>
     <footer>
-        <p>RAFA events &copy; 2022</p>
+        <div>RAFA events &copy; 2022</div>
     </footer>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 </body>
