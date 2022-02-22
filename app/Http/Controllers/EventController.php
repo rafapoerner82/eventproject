@@ -66,18 +66,46 @@ class EventController extends Controller
         return view('events.show', ['event' => $event, 'eventOwner' => $eventOwner]);
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
         $user = auth()->user();
 
         $events = $user->events;
 
         return view('events.dashboard', ['events' => $events]);
-
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         Event::findOrFail($id)->delete();
 
         return redirect('/dashboard')->with('msg', 'Evento excluído com sucesso!');
+    }
+
+    public function edit($id)
+    {
+        $event = Event::findOrFail($id);
+
+        return view('events.edit', ['event' => $event]);
+    }
+
+    public function update(Request $request)
+    {
+
+        $data = $request->all();
+
+        //Image Upload
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $requestImage = $request->image;
+            $extension = $requestImage->extension(); // Pega a extensão do arquivo.
+            $imageName = md5($requestImage->getClientOriginalName()) . strtotime('now') . '.' . $extension; //md5 faz uma hash da imagem e strtotime pega a hora atual.
+            $requestImage->move(public_path('img/events'), $imageName); // Move o arquivo para a pasta img/events.
+            $data['image'] = $imageName; // Edita o nome da imagem no banco de dados.
+        }
+
+        Event::findOrFail($request->id)->update($data);
+
+        return redirect('/dashboard')->with('msg', 'Evento editado com sucesso!');
     }
 }

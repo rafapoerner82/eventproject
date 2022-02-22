@@ -74,6 +74,7 @@ header {
     height: 400px;
     padding: 50px;
     text-align: center;
+    opacity: 0.8;
 }
 
 #search-container h1 {
@@ -218,6 +219,14 @@ header {
 .dashboard-events-container form {
     display: inline-block;
 }
+
+/*Edit Page*/
+
+.image-preview {
+    width: 100px;
+    margin-top: 20px;
+}
+
 
 /* Footer*/
 footer {
